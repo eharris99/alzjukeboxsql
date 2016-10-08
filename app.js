@@ -50,6 +50,8 @@ app.get('/users', (req, res) => {
   res.render('users');
 });
 
+
+
 var users = [
   { firstName : 'Audrey', 
   lastName : 'Hepburn',
@@ -65,7 +67,9 @@ var users = [
 ];
 
 app.get('/index', function(req, res) {
-  res.json(users);
+  
+    res.json(users);
+  
 });
 
 
