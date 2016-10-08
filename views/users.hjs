@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>{{ title }}</title>
   </head>
-
   <body>
     <h1>Sign Up</h1>
-    <form action="./api/profile" method="post">
+    <form action="/api/user" method="post">
     	<input type="text" name="firstName" placeholder="First Name" /><br />
     	<input type="text" name="lastName" placeholder="Last Name" /><br />
     	<input type="text" name="email" placeholder="Email" /><br />
-    	<input type="text" name="password" placeholder="Password" /><br />
+    	<input type="password" name="password" placeholder="Password" /><br />
     	<input type="submit" value="Submit" />
     </form>
-
-    <script type="text/javascript" src="/build/bundle.js"></script>
   </body>
-
-
 </html>
 
 

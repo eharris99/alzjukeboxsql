@@ -2,80 +2,54 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User.js')
 
-module.exports = {
+// module.exports = {
 
-	get: function(params, isRaw, callback){
-		Entry.find(params, function(err, entries){
-			if (err){
-				if (callback != null)
-					callback(err, null)
+// 	get: function(params, isRaw, callback){
+// 		User.find(params, function(err, users){
+// 			if (err){
+// 				if (callback != null)
+// 					callback(err, null)
 
-				return
-			}
+// 				return
+// 			}
 
-			if (callback != null){
-				// if (isRaw == true){
-				// 	callback(null, entries)
-				// 	return
-				// }
+// 			if (callback != null){
+				
 
-				// var summaries = []
-				// for (var i=0; i<entries.length; i++){
-				// 	var entry = entries[i]
-				// 	summaries.push(place.summary())
-				// }
+// 				callback(null, users)
+// 			}
+// 		})
+// 	},
 
-				callback(null, entries)
-			}
-		})
-	},
+// 	getById: function(id, isRaw, callback){
+// 		User.findById(id, function(err, user){
+// 			if (err){
+// 				if (callback != null)
+// 					callback({message:'Entry Not Found'}, null)
 
-	getById: function(id, isRaw, callback){
-		Entry.findById(id, function(err, entry){
-			if (err){
-				if (callback != null)
-					callback({message:'Entry Not Found'}, null)
+// 				return
+// 			}
 
-				return
-			}
+// 			if (callback != null)
+// 				callback(null, User)
+// 		})
+// 	},
 
-			if (callback != null)
-				callback(null, Entry)
-		})
-	},
+// 	post: function(params, callback){
 
-	post: function(params, callback){
+// 		User.create(params, function(err, user){
+// 			if (err){
+// 				if (callback != null)
+// 					callback(err, null)
 
-		Entry.create(params, function(err, entry){
-			if (err){
-				if (callback != null)
-					callback(err, null)
+// 				return
+// 			}
 
-				return
-			}
-
-			if (callback != null)
-				callback(null, entry)
-		})
-	},
-
-	// put: function(id, params, callback){
-	// 	Place.findByIdAndUpdate(id, params, {new:true}, function(err, place){
-	// 		if (err){
-	// 			if (callback != null)
-	// 				callback(err, null)
-
-	// 			return
-	// 		}
-
-	// 		if (callback != null)
-	// 			callback(null, place.summary())
-	// 	})
-	// }
-
-
-
-}
+// 			if (callback != null)
+// 				callback(null, user)
+// 		})
+// 	},
+// }
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
