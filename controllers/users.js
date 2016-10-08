@@ -7,10 +7,10 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-
 // define the home page route
-router.get('/', function(req, res) {
-  res.send('Users home page');
+router.get('/users', function(req, res) {
+  // res.send('Users home page');
+  res.render('./views/users.hjs')
 });
 
 router.post('/users/:id', function(req, res) {

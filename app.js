@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-
+const hoganexpress=require('hogan-express');
 
 const users = require('./controllers/users');
+
 app.use('/users', users);
 
 
@@ -19,23 +20,37 @@ app.get('/users/:fName lName', (req, res) => {
   res.send('The username is: ' + "   " +  req.params.fName + "   " + req.params.lName);
 });
 
-app.get('/users', (req, res) => {
-  res.send('users page');
+app.get('/', (req, res) => {
+  res.send('alzjukebox homepage');
 });
 
 // GET method route
-app.get('/', (req, res) => {
-  res.send('GET request to the homepage');
+app.get('/users', (req, res) => {
+  // res.send('users homepage');
+  res.render('users');
 });
+
+// app.get '/', (req,res)=> {
+//   res.locals = name: 'Andrew'
+//   res.render 'template', partials: {message: 'message'}
+//   }
 
 // POST method route
 app.post('/', (req, res) => {
   res.send('POST request to the homepage');
 });
 
+app.listen(8000);
+
+app.set('view engine', 'hjs');   
+// app.set 'layout', 'layout'        
+// app.set 'partials', foo: 'foo'   
+// app.enable 'view cache'
+// app.engine 'html', require('hogan-express')
+
 module.exports = app
 
-// app.listen(8000);
+
 
 // var express = require('express');
 // var app = express();
