@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
 var users = require('./controllers/UserController');
-// var routes = require('./routes/index');
+var routes = require('./routes/api.js');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var api = require('./routes/api');
@@ -50,6 +50,24 @@ app.get('/users', (req, res) => {
   res.render('users');
 });
 
+var users = [
+  { firstName : 'Audrey', 
+  lastName : 'Hepburn',
+  email: 'audrey@gmail.com',
+  password: '1234'
+},
+{ firstName : 'Fred', 
+  lastName : 'Flintstone',
+  email: '1234@gmail.com',
+  password: '1234'
+}
+  
+];
+
+app.get('/index', function(req, res) {
+  res.json(users);
+});
+
 
 // POST method route
 app.post('/', (req, res) => {
@@ -60,10 +78,11 @@ app.listen(8000);
 
 
 app.set('view engine', 'hjs');   
-// app.use('/', routes);
+app.use('/', routes);
 app.use('/api', api);
-app.use('/users', users);
-
+// app.use('/users', users);
+// app.use(app.router);
+// routes.initialize(app);
 module.exports = app;
 
 
