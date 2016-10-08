@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
 var users = require('./controllers/UserController');
-var routes = require('./routes/index');
+// var routes = require('./routes/index');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var api = require('./routes/api');
@@ -60,7 +60,7 @@ app.listen(8000);
 
 
 app.set('view engine', 'hjs');   
-app.use('/', routes);
+// app.use('/', routes);
 app.use('/api', api);
 app.use('/users', users);
 
