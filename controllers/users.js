@@ -13,6 +13,10 @@ router.get('/', function(req, res) {
   res.send('Users home page');
 });
 
+router.post('/users/:id', function(req, res) {
+  res.send('post page for a user');
+});
+
 // define the about route
 router.get('/:slug', function(req, res) {
   res.send('This is user: ' + req.params.slug);

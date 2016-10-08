@@ -33,7 +33,9 @@ app.post('/', (req, res) => {
   res.send('POST request to the homepage');
 });
 
-app.listen(8000);
+module.exports = app
+
+// app.listen(8000);
 
 // var express = require('express');
 // var app = express();
