@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var api = require('./routes/api');
 var connect = require('connect');
+var handlebars = require('handlebars');
 var http = require('http');
 
 

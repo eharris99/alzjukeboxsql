@@ -7,6 +7,13 @@ router.createUser = function(req,res){
  	User.createUser;
  }
 
+ router.showUsers = function(req, res){
+ 	User.find()
+	.then(function(userList){
+		res.render('users', {users: userList});
+	});
+ };
+
 /* GET users listing. */
 router.get('/:resource', function(req, res, next) {
 	var resource = req.params.resource
