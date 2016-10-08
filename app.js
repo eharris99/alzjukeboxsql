@@ -78,7 +78,11 @@ var mongoose = require('mongoose');
 var path = require('path');
 var users = require('./controllers/UserController');
 var routes = require('./routes/index');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var api = require('./routes/api');
+var connect = require('connect');
+var http = require('http');
 
 
 var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/alzjukebox'
@@ -93,6 +97,8 @@ mongoose.connect(dbUrl, function(err, res){
 
 var app = express();
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 //Consuming route parameters
 app.get('/users/:username', (req, res) => {
@@ -106,6 +112,10 @@ app.get('/users/:username', (req, res) => {
 app.get('/users/:fName lName', (req, res) => {
   res.send('The username is: ' + "   " +  req.params.fName + "   " + req.params.lName);
 });
+
+// app.get('/', function (req, res) {
+//   res.send('suh !');
+// });
 
 app.get('/', (req, res) => {
   res.send('alzjukebox homepage');
@@ -129,10 +139,12 @@ app.post('/', (req, res) => {
 
 app.listen(8000);
 
+
 app.set('view engine', 'hjs');   
 app.use('/', routes);
 app.use('/api', api);
 app.use('/users', users);
+
 // app.set 'layout', 'layout'        
 // app.set 'partials', foo: 'foo'   
 // app.enable 'view cache'
