@@ -1,0 +1,23 @@
+{
+  "name": "alzjukebox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eharris99/alzjukebox.git"
+  },
+  "author": "Elise",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eharris99/alzjukebox/issues"
+  },
+  "homepage": "https://github.com/eharris99/alzjukebox#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "node_modules/nodemon"
+  }
+}
