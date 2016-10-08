@@ -5,7 +5,7 @@
 
   <body>
     <h1>Sign Up</h1>
-    <form action=“./api/profile" method="post">
+    <form action="./api/profile" method="post">
     	<input type="text" name="firstName" placeholder="First Name" /><br />
     	<input type="text" name="lastName" placeholder="Last Name" /><br />
     	<input type="text" name="email" placeholder="Email" /><br />

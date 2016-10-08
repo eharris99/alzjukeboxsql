@@ -1,11 +1,20 @@
 const express = require('express');
 const app = express();
 const hoganexpress=require('hogan-express');
-
-const users = require('./controllers/users');
-
+var mongoose = require('mongoose');
+const users = require('./controllers/UserController');
+var api = require('./routes/api');
 app.use('/users', users);
 
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/alzjukebox'
+mongoose.connect(dbUrl, function(err, res){
+  if (err){
+    console.log('DB CONNECTION FAIL: '+err)
+  }
+  else {
+    console.log('DB CONNECTION SUCCESS: '+dbUrl)
+
+  }
 
 //Consuming route parameters
 app.get('/users/:username', (req, res) => {
@@ -43,12 +52,14 @@ app.post('/', (req, res) => {
 app.listen(8000);
 
 app.set('view engine', 'hjs');   
+app.use('/api', api);
 // app.set 'layout', 'layout'        
 // app.set 'partials', foo: 'foo'   
 // app.enable 'view cache'
 // app.engine 'html', require('hogan-express')
 
-module.exports = app
+module.exports = app;
+});
 
 
 
