@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var path = require('path');
 var index = require('./controllers/index');
-var users = require('./controllers/signup');
+var users = require('./controllers/users');
 var routes = require('./routes/api.js');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -141,7 +141,14 @@ app.get('/index', function(req, res) {
     });
   // },
 });
-
+app.get('/users', function(req, res) {
+    models.User.findAll().then((user) => {
+      res.render('users/user', {
+        user,
+      });
+    });
+  // },
+});
 
 
 // POST method route
