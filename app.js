@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var path = require('path');
 var index = require('./controllers/index');
-var users = require('./controllers/users');
+var users = require('./controllers/signup');
 var routes = require('./routes/api.js');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -111,15 +111,35 @@ var users = [
 app.set('views', __dirname + '/');
 app.set('.html', require('handlebars'));
 
-app.get('/users', function(req, res) {
-    res.render('./users.handlebars')
+app.get('/signup', function(req, res) {
+    res.render('./signup.handlebars')
 });
-
+app.post('/signup', (req, res) => {
+    models.User.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+    }).then((user) => {
+      req.login(user, () =>
+        res.redirect('/profile')
+      );
+    }).catch(() => {
+      res.render('signup');
+    // });
+  });
+  });
+// });
 
 // var Users=template(users.toJSON());
 
 app.get('/index', function(req, res) {
-    res.render('./index.handlebars')
+    models.User.findAll().then((user) => {
+      res.render('index', {
+        user,
+      });
+    });
+  // },
 });
 
 
