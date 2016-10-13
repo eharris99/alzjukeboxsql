@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/User.js')
+var models = require('../models/');
+var User = require('../models/user.js');
+
+models.User.findAll().then(function(users) {
+  console.log(users)
+})
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -11,11 +16,12 @@ router.use(function timeLog(req, res, next) {
 // define the home page route
 router.get('/users', function(req, res) {
   // res.send('Users home page');
-  res.render('./views/users.hjs')
+  // res.render('./views/users.hjs')
+  res.render('./views/users.handlebars')
 });
 
 router.get('/index', function(req, res, next){
-	User.find()
+	models.User.findAll
 	.then(function(userList){
 		res.render('index', {users: userList});
 	});

@@ -7,21 +7,44 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var api = require('./routes/api');
 var connect = require('connect');
-var handlebars = require('handlebars');
+var exphbs = require('express-handlebars');
 var http = require('http');
+var Sequelize = require('sequelize');
+var bluebird= require('bluebird');
+const passport = require('./middlewares/authentication');
 
+var sequelize = new Sequelize("postgres://node:ctp2016@localhost:5432/alzjukebox_development");
 
-var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/alzjukebox'
-mongoose.connect(dbUrl, function(err, res){
-  if (err){
-    console.log('DB CONNECTION FAIL: '+err)
-  }
-  else {
-    console.log('DB CONNECTION SUCCESS: '+dbUrl)
-  }
-})
+// sequelize.authenticate().complete(function(err) {
+//     if (err) {
+//       console.log('Unable to connect to the database:', err);
+//     } else {
+//       console.log('Connection has been established successfully.');
+//     }
+// });
+
+var sql = new Sequelize('alzjukebox_development', 'node', 'ctp2016', {
+    host: 'localhost',
+    port: 5432,
+    dialect: 'postgres'
+});
+
+var test = sql.authenticate()
+    .then(function () {
+        console.log("CONNECTED! ");
+    })
+    .catch(function (err) {
+        console.log("SOMETHING DONE GOOFED");
+    })
+    .done();
 
 var app = express();
+
+app.engine('handlebars', exphbs({
+  layoutsDir: './views/layouts',
+  defaultLayour: 'main',
+
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -45,10 +68,10 @@ app.get('/', (req, res) => {
 });
 
 // GET method route
-app.get('/users', (req, res) => {
-  // res.send('users homepage');
-  res.render('users');
-});
+// app.get('/users', (req, res) => {
+//   // res.send('users homepage');
+//   res.render('users');
+// });
 
 
 
@@ -66,11 +89,16 @@ var users = [
   
 ];
 
+app.set('views', __dirname + '/');
+app.set('.html', require('handlebars'));
+
 app.get('/index', function(req, res) {
   
-    res.json(users);
+    res.render('./index.handlebars');
   
 });
+
+
 
 
 // POST method route
@@ -80,8 +108,12 @@ app.post('/', (req, res) => {
 
 app.listen(8000);
 
+app.use(require('./controllers/'));
 
-app.set('view engine', 'hjs');   
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars'); 
+// app.set('views', '${__dirname}/views/');
 app.use('/', routes);
 app.use('/api', api);
 // app.use('/users', users);
