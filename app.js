@@ -1,7 +1,9 @@
 var express = require('express');
+var router = express.Router();
 var mongoose = require('mongoose');
 var path = require('path');
-var users = require('./controllers/UserController');
+var index = require('./controllers/index');
+var users = require('./controllers/users');
 var routes = require('./routes/api.js');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -12,6 +14,8 @@ var http = require('http');
 var Sequelize = require('sequelize');
 var bluebird= require('bluebird');
 const passport = require('./middlewares/authentication');
+var User = require('./models/user.js');
+var models = require('./models/');
 
 var sequelize = new Sequelize("postgres://node:ctp2016@localhost:5432/alzjukebox_development");
 
@@ -67,6 +71,14 @@ app.get('/', (req, res) => {
   res.send('alzjukebox homepage');
 });
 
+app.use(function(req,res,next){
+    //req.conn = conn;
+    req.app = app;
+    //req.db = db;
+    // handle_database(req,res);
+    next();
+});
+
 // GET method route
 // app.get('/users', (req, res) => {
 //   // res.send('users homepage');
@@ -89,15 +101,26 @@ var users = [
   
 ];
 
+// var showUsers = function(req, res){
+//   User.find()
+//   .then(function(userList){
+//     res.render('users', {users: userList});
+//   });
+//  };
+
 app.set('views', __dirname + '/');
 app.set('.html', require('handlebars'));
 
-app.get('/index', function(req, res) {
-  
-    res.render('./index.handlebars');
-  
+app.get('/users', function(req, res) {
+    res.render('./users.handlebars')
 });
 
+
+// var Users=template(users.toJSON());
+
+app.get('/index', function(req, res) {
+    res.render('./index.handlebars')
+});
 
 
 
@@ -108,7 +131,19 @@ app.post('/', (req, res) => {
 
 app.listen(8000);
 
-app.use(require('./controllers/'));
+// Create `ExpressHandlebars` instance with a default layout.
+// var hbs = exphbs.create({
+//     defaultLayout: 'main',
+//     helpers      : helpers,
+
+//     // Uses multiple partials dirs, templates in "shared/templates/" are shared
+//     // with the client-side of the app (see below).
+//     partialsDir: [
+//         'shared/templates/',
+//         'views/partials/'
+//     ]
+// });
+
 
 app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('views', path.join(__dirname, 'views'));
@@ -116,6 +151,8 @@ app.set('view engine', 'handlebars');
 // app.set('views', '${__dirname}/views/');
 app.use('/', routes);
 app.use('/api', api);
+
+var controllers = (require('./controllers/'));
 // app.use('/users', users);
 // app.use(app.router);
 // routes.initialize(app);
